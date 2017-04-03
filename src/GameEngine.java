@@ -36,7 +36,7 @@ public class GameEngine implements KeyListener {
             case KeyEvent.VK_A:
                 break;
             case KeyEvent.VK_SPACE:
-                renderFrame.pauseOrUnpause();
+                renderFrame.pauseOrContinue();
             default:
                 break;
         }

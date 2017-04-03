@@ -10,6 +10,7 @@ public class RenderThread extends Thread {
 
     private int SLEEP_DURATION = 15;
 
+    private boolean isPaused = false;
 
     final int width, height;
 
@@ -47,6 +48,16 @@ public class RenderThread extends Thread {
 
         while (continueRendering) {
 
+            while (isPaused) {
+                synchronized (this) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
             Graphics g = buffer.getDrawGraphics();
 
             g.setColor(Color.BLACK);
@@ -74,8 +85,17 @@ public class RenderThread extends Thread {
                 e.printStackTrace();
             }
         }
+
     }
 
+    public synchronized void pauseRender() {
+        isPaused = true;
+    }
+
+    public synchronized void resumeRender() {
+        isPaused = false;
+        notify();
+    }
 
     public void quit() {
         continueRendering = false;

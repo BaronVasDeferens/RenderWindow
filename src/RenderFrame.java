@@ -55,14 +55,12 @@ public class RenderFrame implements WindowListener {
 
         Random rando = new Random();
 
-        for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < 50; j++) {
-                if (j % 2 == 0)
-                    sprites.add(new Tile(i * 5, j * 5, 10, new Color(rando.nextInt(240), 144, 66)));
-                else
-                    sprites.add(new ScatterTile(i * 5, j * 5, 10, new Color(rando.nextInt(240), 144, 66)));
+        for (int i = 0; i < 25; i++) {
+            for (int j = 0; j < 25; j++) {
+                sprites.add(new ScatterTile(i * 10, j * 25, 25, new Color(rando.nextInt(240), 0, 66)));
             }
-//            sprites.add(new Tumbler("asteroid.png", PANEL_WIDTH, PANEL_HEIGHT));
+
+            sprites.add(new Tumbler("asteroid.png", PANEL_WIDTH, PANEL_HEIGHT));
         }
 
         canvas.createBufferStrategy(2);
@@ -93,28 +91,15 @@ public class RenderFrame implements WindowListener {
     }
 
 
-    public void pauseOrUnpause() {
-
+    public void pauseOrContinue() {
         if (isPaused) {
-
-            synchronized(renderer) {
-                renderer.notify();
-                isPaused = false;
-            }
+            isPaused = false;
+            renderer.resumeRender();
         }
         else {
-
-            try {
-                synchronized (renderer) {
-                    renderer.wait();
-                    isPaused = true;
-                }
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            isPaused = true;
+            renderer.pauseRender();
         }
-
     }
 
 

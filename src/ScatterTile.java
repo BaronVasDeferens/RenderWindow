@@ -17,10 +17,11 @@ public class ScatterTile extends Tile {
 
     @Override
     void updateAndDrawGraphics(Graphics g) {
+
         x += boogieFactorX;
         y += boogieFactorY;
 
-        changeColor();
+        //changeColor();
 
         g.setColor(backgroundColor);
         g.fillRect(x, y, size, size);
@@ -33,12 +34,14 @@ public class ScatterTile extends Tile {
         int green = backgroundColor.getGreen();
         int blue = backgroundColor.getBlue();
 
-        red = (red + 1) % 255;
+        red = red - 2;
         //blue = (blue + 1) % 255;
 
-        backgroundColor = new Color(red, 0, 0);
-
-        if (red == 0)
+        if (red <= 0) {
+            red = 0;
             disposeOnNextRerender = true;
+        }
+
+        backgroundColor = new Color(red, 0, 0);
     }
 }
