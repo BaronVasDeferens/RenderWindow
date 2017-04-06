@@ -67,16 +67,22 @@ public class RenderThread extends Thread {
 
             for (Sprite spr : sprites) {
                 spr.updateAndDrawGraphics(g);
-                if (!spr.disposeOnNextRerender)
+                if (!spr.disposeOnNextUpdate)
                     aliveSprites.add(spr);
             }
 
             sprites = aliveSprites;
 
+            // Place any post-rendering stats here
+//            g.setColor(Color.GREEN);
+//            g.drawString("stats", 100, 100);
+
             if (!buffer.contentsLost()) {
                 buffer.show();
                 Toolkit.getDefaultToolkit().sync();
             }
+
+
 
             g.dispose();
             try {

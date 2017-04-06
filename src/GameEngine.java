@@ -1,8 +1,10 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
-public class GameEngine implements KeyListener {
+public class GameEngine implements KeyListener, MouseListener {
 
     RenderFrame renderFrame;
 
@@ -11,7 +13,9 @@ public class GameEngine implements KeyListener {
     }
 
     public GameEngine() {
-        renderFrame = new RenderFrame(this);
+        renderFrame = new RenderFrame();
+        renderFrame.registerKeyListener(this);
+        renderFrame.registerMouseListener(this);
         renderFrame.goFullscreen();
         renderFrame.start();
     }
@@ -46,4 +50,28 @@ public class GameEngine implements KeyListener {
 
     public void keyTyped(KeyEvent e) {  }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        renderFrame.pauseOrContinue();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

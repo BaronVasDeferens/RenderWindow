@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
@@ -23,19 +24,24 @@ public class RenderFrame implements WindowListener {
     private boolean isPaused = false;
 
 
-    public RenderFrame(KeyListener listener) {
+    public RenderFrame() {
 
         super();
 
         jFrame = new JFrame();
-        jFrame.addKeyListener(listener);
-
         canvas = new Canvas();
         sprites = new ArrayList<>();
-
-        init();
     }
 
+    public void registerKeyListener(KeyListener keyListener) {
+        jFrame.addKeyListener(keyListener);
+        canvas.addKeyListener(keyListener);
+    }
+
+    public void registerMouseListener(MouseListener mouseListener) {
+        jFrame.addMouseListener(mouseListener);
+        canvas.addMouseListener(mouseListener);
+    }
 
     private void init() {
 
@@ -55,12 +61,14 @@ public class RenderFrame implements WindowListener {
 
         Random rando = new Random();
 
-        for (int i = 0; i < 25; i++) {
-            for (int j = 0; j < 25; j++) {
-                sprites.add(new ScatterTile(i * 10, j * 25, 25, new Color(rando.nextInt(240), 0, 66)));
+        for (int i = 0; i < 30; i++) {
+            for (int j = 0; j < 30; j++) {
+                ScatterTile st = new ScatterTile(i * 25, j * 25, 2 * (i + 2) / 2, new Color(rando.nextInt(225), 0 ,0));
+                st.setBounds(0, PANEL_WIDTH, 0, PANEL_HEIGHT);
+                sprites.add(st);
             }
 
-            sprites.add(new Tumbler("asteroid.png", PANEL_WIDTH, PANEL_HEIGHT));
+            // sprites.add(new Tumbler("bob.png", PANEL_WIDTH, PANEL_HEIGHT));
         }
 
         canvas.createBufferStrategy(2);
@@ -70,6 +78,7 @@ public class RenderFrame implements WindowListener {
     }
 
     public void start() {
+        init();
         renderer.start();
     }
 
@@ -92,6 +101,7 @@ public class RenderFrame implements WindowListener {
 
 
     public void pauseOrContinue() {
+
         if (isPaused) {
             isPaused = false;
             renderer.resumeRender();

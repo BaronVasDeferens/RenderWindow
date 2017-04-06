@@ -9,9 +9,9 @@ import java.util.Random;
  */
 public abstract class Sprite {
 
-    BufferedImage image;
-    int x, y;
-    protected boolean disposeOnNextRerender = false;
+    protected BufferedImage image;
+    protected int x, y;
+    protected boolean disposeOnNextUpdate = false;
 
     static Random rando = new Random();
 

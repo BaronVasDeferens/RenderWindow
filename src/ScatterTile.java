@@ -5,15 +5,26 @@ import java.awt.*;
  */
 public class ScatterTile extends Tile {
 
-    int boogieFactorX, boogieFactorY;
+    private int boogieFactorX = 0, boogieFactorY = 0;
+    private int lowerBound, upperBound, leftBound, rightBound;
 
     public ScatterTile(int x, int y, int size, Color backgroundColor) {
 
         super(x,y,size,backgroundColor);
-        boogieFactorX = rando.nextInt(15) - 3;
-        boogieFactorY = rando.nextInt(15) - 3;
+        resetBoogieFactors();
     }
 
+
+    public void setBounds(int left, int right, int top, int bottom) {
+        this.upperBound = top;
+        this.lowerBound = bottom;
+        this.leftBound = left;
+        this.rightBound = right;
+    }
+
+    public boolean checkBounds() {
+        return (x < leftBound) || (x > rightBound) || (y < upperBound) || (y > lowerBound);
+    }
 
     @Override
     void updateAndDrawGraphics(Graphics g) {
@@ -22,11 +33,29 @@ public class ScatterTile extends Tile {
         y += boogieFactorY;
 
         //changeColor();
+        if (checkBounds()) {
+            resetBoogieFactors();
+        }
 
         g.setColor(backgroundColor);
         g.fillRect(x, y, size, size);
     }
 
+    private void resetBoogieFactors() {
+
+        boogieFactorX = rando.nextInt(8) - rando.nextInt(7);
+        boogieFactorY = rando.nextInt(8) - rando.nextInt(7);
+
+        if  (boogieFactorX == 0 && boogieFactorY == 0) {
+
+            while (boogieFactorX == 0) {
+                boogieFactorX = rando.nextInt(8) - rando.nextInt(7);
+            }
+            while (boogieFactorY == 0) {
+                boogieFactorY = rando.nextInt(8) - rando.nextInt(7);
+            }
+        }
+    }
 
     private void changeColor() {
 
@@ -35,13 +64,13 @@ public class ScatterTile extends Tile {
         int blue = backgroundColor.getBlue();
 
         red = red - 2;
-        //blue = (blue + 1) % 255;
+        blue = blue - 2;
 
-        if (red <= 0) {
-            red = 0;
-            disposeOnNextRerender = true;
+        if (blue <= 0) {
+            blue = 0;
+            disposeOnNextUpdate = true;
         }
 
-        backgroundColor = new Color(red, 0, 0);
+        backgroundColor = new Color(0, 0, blue);
     }
 }
