@@ -60,10 +60,8 @@ public class RenderThread extends Thread {
 
             Graphics g = buffer.getDrawGraphics();
 
-            g.setColor(Color.BLACK);
-            g.fillRect(0, 0, width, height);
-
-            List<Sprite> aliveSprites = new ArrayList<>();
+//            g.setColor(Color.BLACK);
+//            g.fillRect(0, 0, width, height);
 
             for (Sprite spr : sprites) {
                 spr.updateAndDrawGraphics(g);

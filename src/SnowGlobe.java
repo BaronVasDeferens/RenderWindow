@@ -44,6 +44,8 @@ public class SnowGlobe extends Effect {
 
     @Override
     public void updateAndDrawGraphics(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, width, height);
         updateAndPaint(g);
     }
 }

@@ -33,6 +33,7 @@ public class ScatterTile extends Tile {
         y += boogieFactorY;
 
         //changeColor();
+
         if (checkBounds()) {
             resetBoogieFactors();
         }
