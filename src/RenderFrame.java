@@ -6,7 +6,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class RenderFrame implements WindowListener {
@@ -59,17 +58,7 @@ public class RenderFrame implements WindowListener {
         jFrame.pack();
         jFrame.setVisible(true);
 
-        Random rando = new Random();
-
-        for (int i = 0; i < 30; i++) {
-            for (int j = 0; j < 30; j++) {
-                ScatterTile st = new ScatterTile(i * 25, j * 25, 2 * (i + 2) / 2, new Color(rando.nextInt(225), 0 ,0));
-                st.setBounds(0, PANEL_WIDTH, 0, PANEL_HEIGHT);
-                sprites.add(st);
-            }
-
-            // sprites.add(new Tumbler("bob.png", PANEL_WIDTH, PANEL_HEIGHT));
-        }
+        sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
 
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
