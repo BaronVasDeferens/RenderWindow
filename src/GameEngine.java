@@ -10,7 +10,7 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public GameEngine() {
-        renderFrame = new RenderFrame();
+        renderFrame = new RenderFrame(800, 800);
 
         // Register listeners
         renderFrame.registerKeyListener(this);
@@ -90,6 +90,6 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         int direction = e.getWheelRotation();
-        System.out.println(direction);
+        renderFrame.zoomInOrOut(direction);
     }
 }

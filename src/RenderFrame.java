@@ -12,8 +12,8 @@ public class RenderFrame implements WindowListener {
     BufferStrategy buffer;
     RenderThread renderer;
 
-    public static int PANEL_WIDTH = 600;
-    public static int PANEL_HEIGHT = 600;
+    private int PANEL_WIDTH = 600;
+    private int PANEL_HEIGHT = 600;
 
     private ArrayList<Sprite> sprites;
 
@@ -22,9 +22,12 @@ public class RenderFrame implements WindowListener {
     private boolean isPaused = false;
 
 
-    public RenderFrame() {
+    public RenderFrame(int width, int height) {
 
         super();
+
+        PANEL_WIDTH = width;
+        PANEL_HEIGHT = height;
 
         jFrame = new JFrame();
         canvas = new Canvas();
@@ -77,6 +80,7 @@ public class RenderFrame implements WindowListener {
         sprites.add(new Tile(200,200,50, Color.GREEN));
 
 
+
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
         renderer = new RenderThread(PANEL_WIDTH, PANEL_HEIGHT, sprites, canvas, buffer);
@@ -118,6 +122,12 @@ public class RenderFrame implements WindowListener {
         }
     }
 
+
+    /**
+     * Determine whether the user has clicked on a Sprite;
+     * If yes, then set that Sprite as the "dragTarget"
+     * @param e
+     */
     public void assessClick(MouseEvent e) {
 
         Point p = e.getPoint();
@@ -130,17 +140,37 @@ public class RenderFrame implements WindowListener {
 
     }
 
+    /**
+     * Moves the "dragTarget" around with the mouse
+     * @param e
+     */
     public void moveTarget(MouseEvent e) {
 
         if (dragTarget != null) {
-            dragTarget.x = e.getX();
-            dragTarget.y = e.getY();
+            dragTarget.x = e.getX() - (dragTarget.size/2);
+            dragTarget.y = e.getY() - (dragTarget.size/2);
         }
     }
 
-
+    /**
+     * When the user releases the button, release the "dragTarget"
+     */
     public void releaseTarget() {
         dragTarget = null;
+    }
+
+    /**
+     * Zooms the entities on screen in or out, depending on whether zoomFactor is positive (in) or negative (out)
+     * @param zoomFactor
+     */
+    public void zoomInOrOut(int zoomFactor) {
+
+        for (Sprite sprite : sprites) {
+            Tile tile = (Tile) sprite;
+            tile.size += 5 * zoomFactor;
+        }
+
+
     }
 
 
