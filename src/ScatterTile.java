@@ -32,17 +32,27 @@ public class ScatterTile extends Tile {
         x += boogieFactorX;
         y += boogieFactorY;
 
-        //changeColor();
+//        changeColor();
 
         if (checkBounds()) {
             resetBoogieFactors();
         }
 
-        g.setColor(backgroundColor);
+        g.setColor(color);
         g.fillRect(x, y, size, size);
     }
 
-    private void resetBoogieFactors() {
+    public boolean containsPoint(Point p) {
+
+        if ((p.getX() >= x) && (p.getX() <= x + size)){
+            if ((p.getY() >= y) && (p.getY() <= y + size)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void resetBoogieFactors() {
 
         boogieFactorX = rando.nextInt(8) - rando.nextInt(7);
         boogieFactorY = rando.nextInt(8) - rando.nextInt(7);
@@ -58,20 +68,20 @@ public class ScatterTile extends Tile {
         }
     }
 
-    private void changeColor() {
+    public void changeColor() {
+//
+//        int red = color.getRed();
+//        int green = color.getGreen();
+//        int blue = color.getBlue();
+//
+//        red = red - 1;
+//        blue = blue - 2;
+//
+//        if (red <= 0) {
+//            red = 0;
+//            disposeOnNextUpdate = true;
+//        }
 
-        int red = backgroundColor.getRed();
-        int green = backgroundColor.getGreen();
-        int blue = backgroundColor.getBlue();
-
-        red = red - 2;
-        blue = blue - 2;
-
-        if (blue <= 0) {
-            blue = 0;
-            disposeOnNextUpdate = true;
-        }
-
-        backgroundColor = new Color(0, 0, blue);
+        color = new Color(255, 0, 0);
     }
 }

@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
@@ -42,6 +39,11 @@ public class RenderFrame implements WindowListener {
         canvas.addMouseListener(mouseListener);
     }
 
+    public void registerMouseMotionListener(MouseMotionListener mouseMotionListener) {
+        jFrame.addMouseMotionListener(mouseMotionListener);
+        canvas.addMouseMotionListener(mouseMotionListener);
+    }
+
     private void init() {
 
         jFrame.requestFocus();
@@ -58,7 +60,10 @@ public class RenderFrame implements WindowListener {
         jFrame.pack();
         jFrame.setVisible(true);
 
-        sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
+        // Add Sprites
+        // This doesn't belong here-- should be property of GameEngine
+        //sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
+        sprites.add(new MouseRepellant(PANEL_WIDTH, PANEL_HEIGHT, 200, 2, 40));
 
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
@@ -82,7 +87,6 @@ public class RenderFrame implements WindowListener {
                 graphicsDev.setFullScreenWindow(jFrame);
                 PANEL_WIDTH = graphicsDev.getDisplayMode().getWidth();
                 PANEL_HEIGHT = graphicsDev.getDisplayMode().getHeight();
-                init();
                 return;
             }
         }
@@ -94,8 +98,7 @@ public class RenderFrame implements WindowListener {
         if (isPaused) {
             isPaused = false;
             renderer.resumeRender();
-        }
-        else {
+        } else {
             isPaused = true;
             renderer.pauseRender();
         }
@@ -103,6 +106,7 @@ public class RenderFrame implements WindowListener {
 
 
     public void quit() {
+        jFrame.setVisible(false);
         renderer.quit();
         jFrame.dispose();
     }

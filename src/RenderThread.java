@@ -76,9 +76,8 @@ public class RenderThread extends Thread {
                 Toolkit.getDefaultToolkit().sync();
             }
 
-
-
             g.dispose();
+
             try {
                 Thread.sleep(SLEEP_DURATION);
             } catch (InterruptedException e) {

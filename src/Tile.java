@@ -1,29 +1,29 @@
 import java.awt.*;
 
 /**
- * Created by skot on 3/30/17.
+ * A 2D solid colored tile
  */
 public class Tile extends Sprite {
 
-    Color backgroundColor;
+    Color color;
     int size;
 
-    public Tile (int x, int y, int size, Color backgroundColor) {
+    public Tile (int x, int y, int size, Color color) {
 
         this.x = x;
         this.y = y;
         this.size = size;
-        this.backgroundColor = backgroundColor;
+        this.color = color;
     }
 
 
     void updateAndDrawGraphics(Graphics g) {
-        g.setColor(backgroundColor);
+        g.setColor(color);
         g.fillRect(x, y, size, size);
     }
 
 
     private void setColor(Color color) {
-        backgroundColor = color;
+        this.color = color;
     }
 }
