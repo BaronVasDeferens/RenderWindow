@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
@@ -20,6 +17,8 @@ public class RenderFrame implements WindowListener {
 
     private ArrayList<Sprite> sprites;
 
+    Tile dragTarget = null;
+
     private boolean isPaused = false;
 
 
@@ -30,6 +29,10 @@ public class RenderFrame implements WindowListener {
         jFrame = new JFrame();
         canvas = new Canvas();
         sprites = new ArrayList<>();
+
+//        if (System.getProperty("os.name").contains("Windows")) {
+//            jFrame.setUndecorated(true);
+//        }
     }
 
     public void registerKeyListener(KeyListener keyListener) {
@@ -40,6 +43,16 @@ public class RenderFrame implements WindowListener {
     public void registerMouseListener(MouseListener mouseListener) {
         jFrame.addMouseListener(mouseListener);
         canvas.addMouseListener(mouseListener);
+    }
+
+    public void registerMouseMotionListener(MouseMotionListener mouseMotion) {
+        jFrame.addMouseMotionListener(mouseMotion);
+        canvas.addMouseMotionListener(mouseMotion);
+    }
+
+    public void registerMouseWheelListener(MouseWheelListener wheelListener) {
+        jFrame.addMouseWheelListener(wheelListener);
+        canvas.addMouseWheelListener(wheelListener);
     }
 
     private void init() {
@@ -58,7 +71,11 @@ public class RenderFrame implements WindowListener {
         jFrame.pack();
         jFrame.setVisible(true);
 
-        sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
+        // sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
+
+        sprites.add(new Tile(100,100,50, Color.RED));
+        sprites.add(new Tile(200,200,50, Color.GREEN));
+
 
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
@@ -101,9 +118,35 @@ public class RenderFrame implements WindowListener {
         }
     }
 
+    public void assessClick(MouseEvent e) {
+
+        Point p = e.getPoint();
+
+        for (Sprite sprite: sprites) {
+            Tile tile = (Tile)sprite;
+            if (tile.containsPoint(p) && dragTarget == null)
+                dragTarget = tile;
+        }
+
+    }
+
+    public void moveTarget(MouseEvent e) {
+
+        if (dragTarget != null) {
+            dragTarget.x = e.getX();
+            dragTarget.y = e.getY();
+        }
+    }
+
+
+    public void releaseTarget() {
+        dragTarget = null;
+    }
+
 
     public void quit() {
         renderer.quit();
+        canvas = null;
         jFrame.dispose();
     }
 
@@ -137,5 +180,7 @@ public class RenderFrame implements WindowListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
     }
+
+
 
 }

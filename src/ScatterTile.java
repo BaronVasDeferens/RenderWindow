@@ -27,7 +27,7 @@ public class ScatterTile extends Tile {
     }
 
     @Override
-    void updateAndDrawGraphics(Graphics g) {
+    public synchronized void updateAndDrawGraphics(Graphics g) {
 
         x += boogieFactorX;
         y += boogieFactorY;

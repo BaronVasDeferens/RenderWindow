@@ -9,9 +9,10 @@ import java.util.Random;
  */
 public abstract class Sprite {
 
-    protected BufferedImage image;
-    protected int x, y;
-    protected boolean disposeOnNextUpdate = false;
+    protected BufferedImage image = null;
+    protected int x, y;                                 // location
+    boolean clickable = false;                          // responds to click events
+    protected boolean disposeOnNextUpdate = false;      // indicates whether an object should be disposed of
 
     static Random rando = new Random();
 
@@ -35,5 +36,9 @@ public abstract class Sprite {
             System.out.println(e.toString());
             throw new RuntimeException(e);
         }
+    }
+
+    public void setClickable(boolean value) {
+        clickable = value;
     }
 }

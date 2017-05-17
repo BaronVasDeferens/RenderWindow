@@ -60,8 +60,8 @@ public class RenderThread extends Thread {
 
             Graphics g = buffer.getDrawGraphics();
 
-//            g.setColor(Color.BLACK);
-//            g.fillRect(0, 0, width, height);
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, width, height);
 
             for (Sprite spr : sprites) {
                 spr.updateAndDrawGraphics(g);
@@ -76,9 +76,8 @@ public class RenderThread extends Thread {
                 Toolkit.getDefaultToolkit().sync();
             }
 
-
-
             g.dispose();
+
             try {
                 Thread.sleep(SLEEP_DURATION);
             } catch (InterruptedException e) {

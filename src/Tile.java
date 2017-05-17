@@ -17,11 +17,19 @@ public class Tile extends Sprite {
     }
 
 
-    void updateAndDrawGraphics(Graphics g) {
+    public synchronized void updateAndDrawGraphics(Graphics g) {
         g.setColor(backgroundColor);
         g.fillRect(x, y, size, size);
     }
 
+    public boolean containsPoint(Point p) {
+        if (p.getX() >= x && p.getX() <= (x + size)) {
+            if (p.getY() >= y && p.getY() <= (y + size))
+                return true;
+        }
+
+        return false;
+    }
 
     private void setColor(Color color) {
         backgroundColor = color;

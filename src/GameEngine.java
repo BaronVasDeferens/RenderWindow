@@ -1,10 +1,7 @@
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 
-public class GameEngine implements KeyListener, MouseListener {
+public class GameEngine implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
     RenderFrame renderFrame;
 
@@ -14,9 +11,14 @@ public class GameEngine implements KeyListener, MouseListener {
 
     public GameEngine() {
         renderFrame = new RenderFrame();
+
+        // Register listeners
         renderFrame.registerKeyListener(this);
         renderFrame.registerMouseListener(this);
-        renderFrame.goFullscreen();
+        renderFrame.registerMouseMotionListener(this);
+        renderFrame.registerMouseWheelListener(this);
+
+        //renderFrame.goFullscreen();
         renderFrame.start();
     }
 
@@ -52,17 +54,17 @@ public class GameEngine implements KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        renderFrame.pauseOrContinue();
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        renderFrame.assessClick(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        renderFrame.releaseTarget();
     }
 
     @Override
@@ -73,5 +75,21 @@ public class GameEngine implements KeyListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        renderFrame.moveTarget(e);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        int direction = e.getWheelRotation();
+        System.out.println(direction);
     }
 }
