@@ -63,6 +63,11 @@ public class Tumbler extends Sprite {
         }
     }
 
+    @Override
+    public void scale(float scaleValue) {
+
+    }
+
     public synchronized void updateAndDrawGraphics(Graphics g) {
         x += directionX;
         y += directionY;

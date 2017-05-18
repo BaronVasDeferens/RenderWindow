@@ -17,7 +17,18 @@ public class RenderFrame implements WindowListener {
 
     private ArrayList<Sprite> sprites;
 
-    Tile dragTarget = null;
+    final float SCALE_FACTOR = 0.10f;
+
+    Sprite dragTarget = null;
+
+    private int initialClickX, initialClickY;   // cordinates of the original click
+
+    private int priorX = PANEL_WIDTH/2;         // prior locations of mouse pointer (for scrolling)
+    private int priorY = PANEL_HEIGHT/2;
+
+    private int subPictureX = 0;                // tracks the upper left corner of the current "window" of
+    private int subPictureY = 0;                // the background image
+
 
     private boolean isPaused = false;
 
@@ -76,10 +87,14 @@ public class RenderFrame implements WindowListener {
 
         // sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
 
+
+
+        PictureTile background = new PictureTile("../images/suspended_map.png");
+        background.setBackground(true);
+        sprites.add(background);
+
         sprites.add(new Tile(100,100,50, Color.RED));
         sprites.add(new Tile(200,200,50, Color.GREEN));
-
-
 
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
@@ -133,29 +148,77 @@ public class RenderFrame implements WindowListener {
         Point p = e.getPoint();
 
         for (Sprite sprite: sprites) {
-            Tile tile = (Tile)sprite;
-            if (tile.containsPoint(p) && dragTarget == null)
-                dragTarget = tile;
+
+            if (sprite instanceof Tile) {
+                Tile tile = (Tile)sprite;
+
+                if (tile.containsPoint(p) && dragTarget == null) {
+                    initialClickX = e.getX();
+                    initialClickY = e.getY();
+                    priorX = e.getX();
+
+
+                    dragTarget = tile;
+                }
+            }
+
+            else if (sprite instanceof PictureTile) {
+                priorX = e.getX();
+                priorY = e.getY();
+
+                PictureTile bg = (PictureTile) sprite;
+                dragTarget = bg;
+            }
+
         }
 
     }
 
     /**
-     * Moves the "dragTarget" around with the mouse
+     * Moves the "dragTarget" around with the mouse. If the target of the click is a Tile, move the tile;
+     * If the target is a background PictureTile, scroll around the image
      * @param e
      */
     public void moveTarget(MouseEvent e) {
 
         if (dragTarget != null) {
-            dragTarget.x = e.getX() - (dragTarget.size/2);
-            dragTarget.y = e.getY() - (dragTarget.size/2);
+
+            if (dragTarget instanceof Tile) {
+                Tile tile = (Tile) dragTarget;
+                // Center on mouse
+                tile.x = e.getX() - (tile.size/2);
+                tile.y = e.getY() - (tile.size/2);
+            }
+            // drag background
+            else if (dragTarget instanceof PictureTile) {
+
+                PictureTile bg = (PictureTile) dragTarget;
+                if (bg.isBackground()) {
+
+                    int xDelta = priorX - e.getX();
+                    priorX = e.getX();
+                    bg.x -= xDelta;
+
+                    int yDelta = priorY - e.getY();
+                    priorY = e.getY();
+                    bg.y -= yDelta;
+
+                }
+            }
+
         }
     }
 
     /**
      * When the user releases the button, release the "dragTarget"
      */
-    public void releaseTarget() {
+    public void releaseTarget(MouseEvent e) {
+        if (dragTarget instanceof PictureTile) {
+            PictureTile bg = (PictureTile) dragTarget;
+            priorX = e.getX();
+            priorY = e.getY();
+        }
+
         dragTarget = null;
     }
 
@@ -166,10 +229,8 @@ public class RenderFrame implements WindowListener {
     public void zoomInOrOut(int zoomFactor) {
 
         for (Sprite sprite : sprites) {
-            Tile tile = (Tile) sprite;
-            tile.size += 5 * zoomFactor;
+            sprite.scale(zoomFactor * SCALE_FACTOR);
         }
-
 
     }
 

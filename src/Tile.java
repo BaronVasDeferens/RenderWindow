@@ -17,6 +17,11 @@ public class Tile extends Sprite {
     }
 
 
+    @Override
+    public void scale(float scaleValue) {
+
+    }
+
     public synchronized void updateAndDrawGraphics(Graphics g) {
         g.setColor(backgroundColor);
         g.fillRect(x, y, size, size);
