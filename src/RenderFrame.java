@@ -89,12 +89,12 @@ public class RenderFrame implements WindowListener {
         PictureTile backgroundTile = new PictureTile("../images/suspended_map.png");
         clickableBackgroundMap.addSprite(backgroundTile, 0);
 
-        clickableBackgroundMap.addSprite(new Tile(100,100,50, Color.RED), 1);
-        clickableBackgroundMap.addSprite(new Tile(200,200,50, Color.GREEN), 1);
-        clickableBackgroundMap.addSprite(new Tile(300,200,50, Color.BLUE), 1);
-        clickableBackgroundMap.addSprite(new Tile(400,200,50, Color.CYAN), 1);
-        clickableBackgroundMap.addSprite(new Tile(500,200,50, Color.MAGENTA), 1);
-        clickableBackgroundMap.addSprite(new Tile(600,200,50, Color.ORANGE), 1);
+        clickableBackgroundMap.addSprite(new Tile(50,50,50, Color.RED), 1);
+        clickableBackgroundMap.addSprite(new Tile(150,50,50, Color.GREEN), 1);
+        clickableBackgroundMap.addSprite(new Tile(250,50,50, Color.BLUE), 1);
+        clickableBackgroundMap.addSprite(new Tile(350,50,50, Color.CYAN), 1);
+        clickableBackgroundMap.addSprite(new Tile(450,50,50, Color.MAGENTA), 1);
+        clickableBackgroundMap.addSprite(new Tile(550,50,50, Color.ORANGE), 1);
 
         sprites.add(clickableBackgroundMap);
 
@@ -146,38 +146,7 @@ public class RenderFrame implements WindowListener {
      * @param e
      */
     public void assessClick(MouseEvent e) {
-
          clickableBackgroundMap.assessClick(e);
-
-//        Point p = e.getPoint();
-
-
-
-//        for (Sprite sprite: sprites) {
-//
-//            if (sprite instanceof Tile) {
-//                Tile tile = (Tile)sprite;
-//
-//                if (tile.containsPoint(p) && dragTarget == null) {
-//                    initialClickX = e.getX();
-//                    initialClickY = e.getY();
-//                    priorX = e.getX();
-//
-//
-//                    dragTarget = tile;
-//                }
-//            }
-//
-//            else if (sprite instanceof PictureTile) {
-//                priorX = e.getX();
-//                priorY = e.getY();
-//
-//                PictureTile bg = (PictureTile) sprite;
-//                dragTarget = bg;
-//            }
-//
-//        }
-
     }
 
     /**
@@ -186,7 +155,6 @@ public class RenderFrame implements WindowListener {
      * @param e
      */
     public void moveTarget(MouseEvent e) {
-
         clickableBackgroundMap.moveTarget(e);
     }
 

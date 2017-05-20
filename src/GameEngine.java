@@ -10,7 +10,7 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public GameEngine() {
-        renderFrame = new RenderFrame(600, 600);
+        renderFrame = new RenderFrame(700, 700);
 
         // Register listeners
         renderFrame.registerKeyListener(this);

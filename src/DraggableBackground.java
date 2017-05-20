@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,11 +15,8 @@ public class DraggableBackground extends Tile {
 
     private int initialClickX, initialClickY;   // cordinates of the original click
 
-    private int priorX = 0;         // prior locations of mouse pointer (for scrolling)
+    private int priorX = 0;                     // prior locations of mouse pointer (for scrolling)
     private int priorY = 0;
-
-    private int subPictureX = 0;                // tracks the upper left corner of the current "window" of
-    private int subPictureY = 0;                // the background image
 
     DraggableBackground(int width, int height) {
         super(width, height, 0, Color.WHITE);
@@ -40,7 +36,6 @@ public class DraggableBackground extends Tile {
      */
     public void addSprite(Sprite sprite, int layer) {
         spritesByLayer[layer].add(sprite);
-        System.out.println("[" + layer + "] : " + spritesByLayer[layer].size());
     }
 
 
@@ -52,7 +47,8 @@ public class DraggableBackground extends Tile {
 
     public void updateAndPaint(Graphics graphics) {
 
-        Arrays.stream(spritesByLayer).forEach((list) -> list.forEach(sprite -> sprite.updateAndDrawGraphics(graphics)));
+        Arrays.stream(spritesByLayer)
+                .forEach((list) -> list.forEach(sprite -> sprite.updateAndDrawGraphics(graphics)));
 
     }
 
@@ -110,6 +106,10 @@ public class DraggableBackground extends Tile {
         return dragTarget;
     }
 
+    /**
+     * Updates the positions of the various Sprites
+     * @param e
+     */
     public void moveTarget(MouseEvent e) {
 
         if (dragTarget != null) {
@@ -141,7 +141,7 @@ public class DraggableBackground extends Tile {
             else {
 
                 Tile tile = (Tile) dragTarget;
-                // Center on mouse
+                // Center Tile on mouse
                 tile.x = e.getX() - (tile.size / 2);
                 tile.y = e.getY() - (tile.size / 2);
             }
@@ -149,6 +149,10 @@ public class DraggableBackground extends Tile {
 
     }
 
+    /**
+     * Called when the user releases the mouse
+     * @param e
+     */
     public void releaseTarget(MouseEvent e) {
 
         priorX = e.getX();
