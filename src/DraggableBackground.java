@@ -52,11 +52,8 @@ public class DraggableBackground extends Tile {
 
     public void updateAndPaint(Graphics graphics) {
 
-        for (int i = 0; i < 10; i++) {
-            for (Sprite sprite : spritesByLayer[i]) {
-                sprite.updateAndDrawGraphics(graphics);
-            }
-        }
+        Arrays.stream(spritesByLayer).forEach((list) -> list.forEach(sprite -> sprite.updateAndDrawGraphics(graphics)));
+
     }
 
     @Override
@@ -70,12 +67,14 @@ public class DraggableBackground extends Tile {
     }
 
 
+    /**
+     * Finds the Sprite with the highest "layer" attribute that contains the click
+     * @param me
+     * @return
+     */
     public Sprite assessClick(MouseEvent me) {
 
         Point p = me.getPoint();
-
-        System.out.println(me.getX() + ":" + me.getY());
-
         Sprite assumedTarget = null;
 
         for (ArrayList<Sprite> list : spritesByLayer) {
@@ -105,6 +104,7 @@ public class DraggableBackground extends Tile {
         priorX = me.getX();
         priorY = me.getY();
 
+        // debug: who got clicked
         System.out.println(dragTarget.toString());
 
         return dragTarget;
