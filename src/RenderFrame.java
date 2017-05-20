@@ -1,3 +1,4 @@
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,17 +18,13 @@ public class RenderFrame implements WindowListener {
 
     private ArrayList<Sprite> sprites;
 
+    DraggableBackground clickableBackgroundMap;
+
     final float SCALE_FACTOR = 0.10f;
 
-    Sprite dragTarget = null;
 
-    private int initialClickX, initialClickY;   // cordinates of the original click
 
-    private int priorX = PANEL_WIDTH/2;         // prior locations of mouse pointer (for scrolling)
-    private int priorY = PANEL_HEIGHT/2;
 
-    private int subPictureX = 0;                // tracks the upper left corner of the current "window" of
-    private int subPictureY = 0;                // the background image
 
 
     private boolean isPaused = false;
@@ -87,14 +84,15 @@ public class RenderFrame implements WindowListener {
 
         // sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
 
+        clickableBackgroundMap = new DraggableBackground(PANEL_WIDTH, PANEL_HEIGHT);
 
+        PictureTile backgroundTile = new PictureTile("../images/suspended_map.png");
+        clickableBackgroundMap.addSprite(backgroundTile, 0);
 
-        PictureTile background = new PictureTile("../images/suspended_map.png");
-        background.setBackground(true);
-        sprites.add(background);
+        clickableBackgroundMap.addSprite(new Tile(100,100,50, Color.RED), 1);
+        clickableBackgroundMap.addSprite(new Tile(200,200,50, Color.GREEN), 1);
 
-        sprites.add(new Tile(100,100,50, Color.RED));
-        sprites.add(new Tile(200,200,50, Color.GREEN));
+        sprites.add(clickableBackgroundMap);
 
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
@@ -145,32 +143,36 @@ public class RenderFrame implements WindowListener {
      */
     public void assessClick(MouseEvent e) {
 
-        Point p = e.getPoint();
+         clickableBackgroundMap.assessClick(e);
 
-        for (Sprite sprite: sprites) {
-
-            if (sprite instanceof Tile) {
-                Tile tile = (Tile)sprite;
-
-                if (tile.containsPoint(p) && dragTarget == null) {
-                    initialClickX = e.getX();
-                    initialClickY = e.getY();
-                    priorX = e.getX();
+//        Point p = e.getPoint();
 
 
-                    dragTarget = tile;
-                }
-            }
 
-            else if (sprite instanceof PictureTile) {
-                priorX = e.getX();
-                priorY = e.getY();
-
-                PictureTile bg = (PictureTile) sprite;
-                dragTarget = bg;
-            }
-
-        }
+//        for (Sprite sprite: sprites) {
+//
+//            if (sprite instanceof Tile) {
+//                Tile tile = (Tile)sprite;
+//
+//                if (tile.containsPoint(p) && dragTarget == null) {
+//                    initialClickX = e.getX();
+//                    initialClickY = e.getY();
+//                    priorX = e.getX();
+//
+//
+//                    dragTarget = tile;
+//                }
+//            }
+//
+//            else if (sprite instanceof PictureTile) {
+//                priorX = e.getX();
+//                priorY = e.getY();
+//
+//                PictureTile bg = (PictureTile) sprite;
+//                dragTarget = bg;
+//            }
+//
+//        }
 
     }
 
@@ -181,45 +183,14 @@ public class RenderFrame implements WindowListener {
      */
     public void moveTarget(MouseEvent e) {
 
-        if (dragTarget != null) {
-
-            if (dragTarget instanceof Tile) {
-                Tile tile = (Tile) dragTarget;
-                // Center on mouse
-                tile.x = e.getX() - (tile.size/2);
-                tile.y = e.getY() - (tile.size/2);
-            }
-            // drag background
-            else if (dragTarget instanceof PictureTile) {
-
-                PictureTile bg = (PictureTile) dragTarget;
-                if (bg.isBackground()) {
-
-                    int xDelta = priorX - e.getX();
-                    priorX = e.getX();
-                    bg.x -= xDelta;
-
-                    int yDelta = priorY - e.getY();
-                    priorY = e.getY();
-                    bg.y -= yDelta;
-
-                }
-            }
-
-        }
+        clickableBackgroundMap.moveTarget(e);
     }
 
     /**
      * When the user releases the button, release the "dragTarget"
      */
     public void releaseTarget(MouseEvent e) {
-        if (dragTarget instanceof PictureTile) {
-            PictureTile bg = (PictureTile) dragTarget;
-            priorX = e.getX();
-            priorY = e.getY();
-        }
-
-        dragTarget = null;
+        clickableBackgroundMap.releaseTarget(e);
     }
 
     /**

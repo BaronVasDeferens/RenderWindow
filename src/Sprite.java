@@ -11,10 +11,11 @@ import java.util.Random;
 public abstract class Sprite {
 
     BufferedImage image = null;
-    int x, y;                                                       // location
+    int x= 0, y = 0;                                                       // location
     protected boolean clickable = true;                             // responds to click events
     protected boolean scalable = true;                              // responds to scale events
     BigDecimal scale = new BigDecimal(1.0f).setScale(2);
+    int layerOrder = 1;                                             // Higher renders later
     protected boolean disposeOnNextUpdate = false;                  // indicates whether an object should be disposed of
 
     static Random rando = new Random();

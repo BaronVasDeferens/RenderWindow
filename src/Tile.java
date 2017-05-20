@@ -16,6 +16,10 @@ public class Tile extends Sprite {
         this.backgroundColor = backgroundColor;
     }
 
+    public Tile() {
+
+    }
+
 
     @Override
     public void scale(float scaleValue) {
