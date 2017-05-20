@@ -91,6 +91,10 @@ public class RenderFrame implements WindowListener {
 
         clickableBackgroundMap.addSprite(new Tile(100,100,50, Color.RED), 1);
         clickableBackgroundMap.addSprite(new Tile(200,200,50, Color.GREEN), 1);
+        clickableBackgroundMap.addSprite(new Tile(300,200,50, Color.BLUE), 1);
+        clickableBackgroundMap.addSprite(new Tile(400,200,50, Color.CYAN), 1);
+        clickableBackgroundMap.addSprite(new Tile(500,200,50, Color.MAGENTA), 1);
+        clickableBackgroundMap.addSprite(new Tile(600,200,50, Color.ORANGE), 1);
 
         sprites.add(clickableBackgroundMap);
 
@@ -200,7 +204,7 @@ public class RenderFrame implements WindowListener {
     public void zoomInOrOut(int zoomFactor) {
 
         for (Sprite sprite : sprites) {
-            sprite.scale(zoomFactor * SCALE_FACTOR);
+            // sprite.scale(zoomFactor * SCALE_FACTOR);
         }
 
     }

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.math.BigDecimal;
 
 /**
  * Created by skot on 4/5/17.
@@ -43,7 +44,7 @@ public class SnowGlobe extends Effect {
     }
 
     @Override
-    public void scale(float scaleValue) {
+    public void scale(BigDecimal scaleValue) {
 
     }
 

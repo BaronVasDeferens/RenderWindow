@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class Tumbler extends Sprite {
@@ -64,7 +65,7 @@ public class Tumbler extends Sprite {
     }
 
     @Override
-    public void scale(float scaleValue) {
+    public void scale(BigDecimal scaleValue) {
 
     }
 

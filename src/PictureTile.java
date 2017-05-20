@@ -17,12 +17,12 @@ public class PictureTile extends Sprite {
     }
 
     @Override
-    public void scale(float scaleValue) {
+    public void scale(BigDecimal scaleValue) {
 
         if (!scalable)
             return;
 
-        scale = scale.add(new BigDecimal(scaleValue));
+        scale = scale.add(scaleValue);
 
         if (scale.floatValue() <= 0 )
             scale = new BigDecimal(0.1f).setScale(2);

@@ -36,7 +36,7 @@ public abstract class Sprite {
 
     public boolean isScalable() { return scalable; }
 
-    public abstract void scale (float scaleValue);
+    public abstract void scale (BigDecimal scaleValue);
 
     abstract void updateAndDrawGraphics(Graphics g);
 

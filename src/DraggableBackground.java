@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -64,7 +65,7 @@ public class DraggableBackground extends Tile {
     }
 
     @Override
-    public void scale(float scaleValue) {
+    public void scale(BigDecimal scaleValue) {
 
     }
 

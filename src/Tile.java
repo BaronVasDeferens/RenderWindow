@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.math.BigDecimal;
 
 /**
  * Created by skot on 3/30/17.
@@ -22,7 +23,7 @@ public class Tile extends Sprite {
 
 
     @Override
-    public void scale(float scaleValue) {
+    public void scale(BigDecimal scaleValue) {
 
     }
 
