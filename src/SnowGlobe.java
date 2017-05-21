@@ -43,9 +43,15 @@ public class SnowGlobe extends Effect {
         sprites.removeAll(deadSprites);
     }
 
-    @Override
-    public void scale(BigDecimal scaleValue) {
 
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    @Override
+    public void setY(int y) {
+        this.y = y;
     }
 
     @Override

@@ -11,9 +11,7 @@ public class DraggableBackground extends Tile {
 
     ArrayList<Sprite>[] spritesByLayer;
 
-    Sprite dragTarget = null;
-
-    private int initialClickX, initialClickY;   // cordinates of the original click
+    Draggable dragTarget = null;
 
     private int priorX = 0;                     // prior locations of mouse pointer (for scrolling)
     private int priorY = 0;
@@ -57,10 +55,6 @@ public class DraggableBackground extends Tile {
         updateAndPaint(g);
     }
 
-    @Override
-    public void scale(BigDecimal scaleValue) {
-
-    }
 
 
     /**
@@ -68,35 +62,34 @@ public class DraggableBackground extends Tile {
      * @param me
      * @return
      */
-    public Sprite assessClick(MouseEvent me) {
+    public Clickable assessClick(MouseEvent me) {
 
         Point p = me.getPoint();
-        Sprite assumedTarget = null;
+        Clickable assumedTarget = null;
 
         for (ArrayList<Sprite> list : spritesByLayer) {
 
             for (Sprite sprite : list) {
 
-                if (sprite instanceof PictureTile) {
-                    assumedTarget = sprite;
-                }
-                else if (sprite instanceof Tile) {
+                if (sprite instanceof Clickable) {
 
-                    Tile tile = (Tile) sprite;
+                    Clickable clickedMe = (Clickable) sprite;
 
-                    if (tile.containsPoint(p))
-                        assumedTarget = tile;
+                    if (sprite.isBackground())
+                        assumedTarget = clickedMe;
+                    else if (clickedMe.containsPoint(p)) {
+                        assumedTarget = clickedMe;
+                    }
                 }
+
             }
         }
 
         if (assumedTarget == null)
             return null;
         else
-            dragTarget = assumedTarget;
+            dragTarget = (Draggable) assumedTarget;
 
-        initialClickX = me.getX();
-        initialClickY = me.getY();
         priorX = me.getX();
         priorY = me.getY();
 
@@ -114,37 +107,27 @@ public class DraggableBackground extends Tile {
 
         if (dragTarget != null) {
 
+            int xDelta = priorX - e.getX();
+            priorX = e.getX();
+            dragTarget.applyDeltaX(-1 * xDelta);
+
+            int yDelta = priorY - e.getY();
+            priorY = e.getY();
+            dragTarget.applyDeltaY(-1 * yDelta);
+
             // Drag & move background
-            if (dragTarget instanceof PictureTile) {
-                PictureTile bg = (PictureTile) dragTarget;
-
-                int xDelta = priorX - e.getX();
-                priorX = e.getX();
-                bg.x -= xDelta;
-
-                int yDelta = priorY - e.getY();
-                priorY = e.getY();
-                bg.y -= yDelta;
+            if (((Sprite) dragTarget).isBackground()) {
 
                 // Update all other entities
                 for (int i = 1; i < 10; i++) {
-                    for (Sprite sprite: spritesByLayer[i]) {
-                        Tile tile = (Tile) sprite;
+                    for (Sprite sprite : spritesByLayer[i]) {
                         // Center on mouse
-                        tile.x -= xDelta;
-                        tile.y -= yDelta;
+                        sprite.x -= xDelta;
+                        sprite.y -= yDelta;
                     }
                 }
-
             }
-            // drag & move foreground objects
-            else {
 
-                Tile tile = (Tile) dragTarget;
-                // Center Tile on mouse
-                tile.x = e.getX() - (tile.size / 2);
-                tile.y = e.getY() - (tile.size / 2);
-            }
         }
 
     }
@@ -158,6 +141,15 @@ public class DraggableBackground extends Tile {
         priorX = e.getX();
         priorY = e.getY();
         dragTarget = null;
+
+        for (ArrayList<Sprite> list: spritesByLayer) {
+            for (Sprite sprite: list) {
+                if (sprite instanceof PictureTile) {
+                    PictureTile picTile = (PictureTile) sprite;
+                    picTile.updatePolygon();
+                }
+            }
+        }
     }
 
 

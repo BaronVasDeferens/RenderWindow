@@ -27,6 +27,11 @@ public class ScatterTile extends Tile {
     }
 
     @Override
+    public boolean containsPoint(Point p) {
+        return false;
+    }
+
+    @Override
     public synchronized void updateAndDrawGraphics(Graphics g) {
 
         x += boogieFactorX;

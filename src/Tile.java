@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 /**
  * Created by skot on 3/30/17.
  */
-public class Tile extends Sprite {
+public class Tile extends Sprite implements Draggable {
 
     Color backgroundColor;
     int size;
@@ -21,17 +21,48 @@ public class Tile extends Sprite {
 
     }
 
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
 
     @Override
-    public void scale(BigDecimal scaleValue) {
+    public void setY(int y) {
+        this.y = y;
+    }
+
+
+    @Override
+    public int applyDeltaX(int deltaX) {
+        x += deltaX;
+        return x;
+    }
+
+    @Override
+    public int applyDeltaY(int deltaY) {
+        y += deltaY;
+        return y;
+    }
+
+    @Override
+    public void setIsBackground(boolean isBackground) {
 
     }
+
+    @Override
+    public Point getCenter() {
+        return (new Point((x + size) / 2, (y + size) / 2));
+    }
+
+
+
 
     public synchronized void updateAndDrawGraphics(Graphics g) {
         g.setColor(backgroundColor);
         g.fillRect(x, y, size, size);
     }
 
+    @Override
     public boolean containsPoint(Point p) {
         if (p.getX() >= x && p.getX() <= (x + size)) {
             if (p.getY() >= y && p.getY() <= (y + size))

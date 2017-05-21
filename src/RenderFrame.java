@@ -86,15 +86,18 @@ public class RenderFrame implements WindowListener {
 
         clickableBackgroundMap = new DraggableBackground(PANEL_WIDTH, PANEL_HEIGHT);
 
+        // Create the lowest layer (background)
         PictureTile backgroundTile = new PictureTile("../images/suspended_map.png");
+        backgroundTile.setIsBackground(true);
         clickableBackgroundMap.addSprite(backgroundTile, 0);
 
-        clickableBackgroundMap.addSprite(new Tile(50,50,50, Color.RED), 1);
-        clickableBackgroundMap.addSprite(new Tile(150,50,50, Color.GREEN), 1);
-        clickableBackgroundMap.addSprite(new Tile(250,50,50, Color.BLUE), 1);
-        clickableBackgroundMap.addSprite(new Tile(350,50,50, Color.CYAN), 1);
-        clickableBackgroundMap.addSprite(new Tile(450,50,50, Color.MAGENTA), 1);
-        clickableBackgroundMap.addSprite(new Tile(550,50,50, Color.ORANGE), 1);
+        // Make the six robot tiles
+        clickableBackgroundMap.addSprite(new PictureTile("../images/auda_sm.png", 50,50), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/iris_sm.png", 150,50), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/poet_sm.png", 250,50), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/sensa_sm.png", 350,50), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/waldo_sm.png", 450,50), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/whiz_sm.png", 550,50), 1);
 
         sprites.add(clickableBackgroundMap);
 

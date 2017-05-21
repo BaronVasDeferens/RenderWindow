@@ -64,8 +64,25 @@ public class Tumbler extends Sprite {
         }
     }
 
+
+    public int applyDeltaX(int deltaX) {
+        x += deltaX;
+        return x;
+    }
+
+
+    public int applyDeltaY(int deltaY) {
+        y += deltaY;
+        return y;
+    }
+
     @Override
-    public void scale(BigDecimal scaleValue) {
+    public void setX(int x) {
+
+    }
+
+    @Override
+    public void setY(int y) {
 
     }
 

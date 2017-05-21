@@ -11,13 +11,11 @@ import java.util.Random;
 public abstract class Sprite {
 
     BufferedImage image = null;
-    int x= 0, y = 0;                                                       // location
-    protected boolean clickable = true;                             // responds to click events
-    protected boolean scalable = true;                              // responds to scale events
-    BigDecimal scale = new BigDecimal(1.0f).setScale(2);
+    int x= 0, y = 0;                                                // location (0,0) at upper left
+
+    protected boolean isBackground = false;
     int layerOrder = 1;                                             // Higher renders later
     protected boolean disposeOnNextUpdate = false;                  // indicates whether an object should be disposed of
-
     static Random rando = new Random();
 
     public Sprite() {}
@@ -26,17 +24,14 @@ public abstract class Sprite {
         image = loadImage(filename);
     }
 
-    public void setClickable(boolean value) {
-        clickable = value;
+    public abstract void setX(int x);
+    public abstract void setY(int y);
+
+    public void setIsBackground(boolean isBackground) {
+        this.isBackground = isBackground;
     }
 
-    public boolean isClickable() { return clickable; }
-
-    public void setScalable(boolean value) { scalable = value; }
-
-    public boolean isScalable() { return scalable; }
-
-    public abstract void scale (BigDecimal scaleValue);
+    public boolean isBackground() { return isBackground; }
 
     abstract void updateAndDrawGraphics(Graphics g);
 
@@ -53,6 +48,5 @@ public abstract class Sprite {
             throw new RuntimeException(e);
         }
     }
-
 
 }
