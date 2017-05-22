@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class DraggableBackground extends Tile implements GloballyScalable {
 
+    // Renders sprites from low layer number(0) to high (9)
     ArrayList<Sprite>[] spritesByLayer;
 
     Draggable dragTarget = null;
@@ -158,23 +159,41 @@ public class DraggableBackground extends Tile implements GloballyScalable {
     @Override
     public void scaleUp() {
 
-        scaleFactor = scaleFactor.add(new BigDecimal(.10f)).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        scaleFactor = scaleFactor.add(scaleStep).setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
         if (scaleFactor.compareTo(BigDecimal.ONE) == 1)
             scaleFactor = BigDecimal.ONE;
 
-        System.out.println(scaleFactor.floatValue());
+        System.out.println("DRAG BKRND scaleFactor: " + scaleFactor.floatValue());
+
+        for (ArrayList<Sprite> list: spritesByLayer) {
+            for (Sprite sprite: list) {
+                if (sprite instanceof GloballyScalable) {
+                    GloballyScalable globScale = (GloballyScalable) sprite;
+                    globScale.scaleUp();
+                }
+            }
+        }
 
     }
 
     @Override
     public void scaleDown() {
 
-        scaleFactor = scaleFactor.subtract(new BigDecimal(.10f)).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        scaleFactor = scaleFactor.subtract(scaleStep).setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
         if (scaleFactor.compareTo(new BigDecimal(0.1f)) <= 0)
             scaleFactor = new BigDecimal(0.1f);
 
-        System.out.println(scaleFactor.floatValue());
+        System.out.println("DRAG BKRND scaleFactor: " + scaleFactor.floatValue());
+
+        for (ArrayList<Sprite> list: spritesByLayer) {
+            for (Sprite sprite: list) {
+                if (sprite instanceof GloballyScalable) {
+                    GloballyScalable globScale = (GloballyScalable) sprite;
+                    globScale.scaleDown();
+                }
+            }
+        }
     }
 }

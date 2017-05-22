@@ -2,12 +2,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.Random;
 
-/**
- * Created by skot on 3/27/17.
- */
+
 public abstract class Sprite {
 
     BufferedImage image = null;
