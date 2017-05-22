@@ -174,9 +174,10 @@ public class RenderFrame implements WindowListener {
      */
     public void zoomInOrOut(int zoomFactor) {
 
-        for (Sprite sprite : sprites) {
-            // sprite.scale(zoomFactor * SCALE_FACTOR);
-        }
+        if (zoomFactor > 0)
+            clickableBackgroundMap.scaleUp();
+        else
+            clickableBackgroundMap.scaleDown();
 
     }
 

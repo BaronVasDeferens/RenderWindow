@@ -4,10 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * Created by skot on 5/19/17.
- */
-public class DraggableBackground extends Tile {
+
+public class DraggableBackground extends Tile implements GloballyScalable {
 
     ArrayList<Sprite>[] spritesByLayer;
 
@@ -16,6 +14,8 @@ public class DraggableBackground extends Tile {
     private int priorX = 0;                     // prior locations of mouse pointer (for scrolling)
     private int priorY = 0;
 
+    BigDecimal scaleFactor;
+
     DraggableBackground(int width, int height) {
         super(width, height, 0, Color.WHITE);
 
@@ -23,6 +23,8 @@ public class DraggableBackground extends Tile {
         for (int i = 0; i < 10; i++) {
             spritesByLayer[i] = new ArrayList<>();
         }
+
+        scaleFactor = new BigDecimal(1.0f).setScale(2);
 
     }
 
@@ -153,4 +155,26 @@ public class DraggableBackground extends Tile {
     }
 
 
+    @Override
+    public void scaleUp() {
+
+        scaleFactor = scaleFactor.add(new BigDecimal(.10f)).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+        if (scaleFactor.compareTo(BigDecimal.ONE) == 1)
+            scaleFactor = BigDecimal.ONE;
+
+        System.out.println(scaleFactor.floatValue());
+
+    }
+
+    @Override
+    public void scaleDown() {
+
+        scaleFactor = scaleFactor.subtract(new BigDecimal(.10f)).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+        if (scaleFactor.compareTo(new BigDecimal(0.1f)) <= 0)
+            scaleFactor = new BigDecimal(0.1f);
+
+        System.out.println(scaleFactor.floatValue());
+    }
 }
