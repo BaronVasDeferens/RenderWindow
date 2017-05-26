@@ -7,7 +7,7 @@ public interface Draggable extends Clickable {
 
     Point getCenter();
 
-    int applyDeltaY(int deltaY);
-    int applyDeltaX(int deltaX);
+//    int applyDeltaY(int deltaY);
+//    int applyDeltaX(int deltaX);
 
 }

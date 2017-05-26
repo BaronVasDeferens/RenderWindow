@@ -89,9 +89,6 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        if (e.getWheelRotation() == -1)
-            renderFrame.zoomInOrOut(-1);
-        else
-            renderFrame.zoomInOrOut(1);
+        renderFrame.zoomInOrOut(e);
     }
 }

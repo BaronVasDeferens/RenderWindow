@@ -1,3 +1,4 @@
+import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 
 /**
@@ -6,6 +7,6 @@ import java.math.BigDecimal;
 public interface GloballyScalable {
 
     BigDecimal scaleStep = new BigDecimal(0.10f).setScale(2, BigDecimal.ROUND_HALF_EVEN);
-    void scaleUp();
-    void scaleDown();
+    void scaleUp(MouseEvent e);
+    void scaleDown(MouseEvent e);
 }

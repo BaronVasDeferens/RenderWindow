@@ -170,14 +170,13 @@ public class RenderFrame implements WindowListener {
 
     /**
      * Zooms the entities on screen in or out, depending on whether zoomFactor is positive (in) or negative (out)
-     * @param zoomFactor
      */
-    public void zoomInOrOut(int zoomFactor) {
+    public void zoomInOrOut(MouseWheelEvent e) {
 
-        if (zoomFactor > 0)
-            clickableBackgroundMap.scaleUp();
+        if (e.getWheelRotation() > 0)
+            clickableBackgroundMap.scaleUp(e);
         else
-            clickableBackgroundMap.scaleDown();
+            clickableBackgroundMap.scaleDown(e);
 
     }
 

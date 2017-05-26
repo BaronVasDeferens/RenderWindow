@@ -32,13 +32,12 @@ public class Tile extends Sprite implements Draggable {
     }
 
 
-    @Override
     public int applyDeltaX(int deltaX) {
         x += deltaX;
         return x;
     }
 
-    @Override
+
     public int applyDeltaY(int deltaY) {
         y += deltaY;
         return y;

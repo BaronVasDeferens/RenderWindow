@@ -8,9 +8,9 @@ import java.util.Arrays;
 public class DraggableBackground extends Tile implements GloballyScalable {
 
     // Renders sprites from low layer number(0) to high (9)
-    ArrayList<Sprite>[] spritesByLayer;
+    ArrayList<PictureTile>[] spritesByLayer;
 
-    Draggable dragTarget = null;
+    PictureTile dragTarget = null;
 
     private int priorX = 0;                     // prior locations of mouse pointer (for scrolling)
     private int priorY = 0;
@@ -32,11 +32,10 @@ public class DraggableBackground extends Tile implements GloballyScalable {
     /**
      * Adds sprites to the correct layer.
      *
-     * @param sprite
      * @param layer
      */
-    public void addSprite(Sprite sprite, int layer) {
-        spritesByLayer[layer].add(sprite);
+    public void addSprite(PictureTile pTile, int layer) {
+        spritesByLayer[layer].add(pTile);
     }
 
 
@@ -68,30 +67,24 @@ public class DraggableBackground extends Tile implements GloballyScalable {
     public Clickable assessClick(MouseEvent me) {
 
         Point p = me.getPoint();
-        Clickable assumedTarget = null;
+        PictureTile assumedTarget = null;
 
-        for (ArrayList<Sprite> list : spritesByLayer) {
+        for (ArrayList<PictureTile> list : spritesByLayer) {
 
-            for (Sprite sprite : list) {
+            for (PictureTile pTile : list) {
 
-                if (sprite instanceof Clickable) {
-
-                    Clickable clickedMe = (Clickable) sprite;
-
-                    if (sprite.isBackground())
-                        assumedTarget = clickedMe;
-                    else if (clickedMe.containsPoint(p)) {
-                        assumedTarget = clickedMe;
-                    }
+                if (pTile.isBackground())
+                    assumedTarget = pTile;
+                else if (pTile.containsPoint(p)) {
+                    assumedTarget = pTile;
                 }
-
             }
         }
 
         if (assumedTarget == null)
             return null;
         else
-            dragTarget = (Draggable) assumedTarget;
+            dragTarget = assumedTarget;
 
         priorX = me.getX();
         priorY = me.getY();
@@ -112,27 +105,25 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
             int xDelta = priorX - e.getX();
             priorX = e.getX();
-            dragTarget.applyDeltaX(-1 * xDelta);
+            dragTarget.applyDeltaX(-xDelta);
 
             int yDelta = priorY - e.getY();
             priorY = e.getY();
-            dragTarget.applyDeltaY(-1 * yDelta);
+            dragTarget.applyDeltaY(-yDelta);
 
             // Drag & move background
-            if (((Sprite) dragTarget).isBackground()) {
+            if (dragTarget.isBackground()) {
 
-                // Update all other entities
+                // Update all other entities, skipping layer 0
                 for (int i = 1; i < 10; i++) {
-                    for (Sprite sprite : spritesByLayer[i]) {
+                    for (PictureTile pTile : spritesByLayer[i]) {
                         // Center on mouse
-                        sprite.x -= xDelta;
-                        sprite.y -= yDelta;
+                        pTile.applyDeltaX(-xDelta);
+                        pTile.applyDeltaY(-yDelta);
                     }
                 }
             }
-
         }
-
     }
 
     /**
@@ -145,7 +136,7 @@ public class DraggableBackground extends Tile implements GloballyScalable {
         priorY = e.getY();
         dragTarget = null;
 
-        for (ArrayList<Sprite> list: spritesByLayer) {
+        for (ArrayList<PictureTile> list: spritesByLayer) {
             for (Sprite sprite: list) {
                 if (sprite instanceof PictureTile) {
                     PictureTile picTile = (PictureTile) sprite;
@@ -157,20 +148,21 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
 
     @Override
-    public void scaleUp() {
+    public void scaleUp(MouseEvent e) {
 
         scaleFactor = scaleFactor.add(scaleStep).setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
         if (scaleFactor.compareTo(BigDecimal.ONE) == 1)
             scaleFactor = BigDecimal.ONE;
 
-        System.out.println("DRAG BKRND scaleFactor: " + scaleFactor.floatValue());
+        priorX = e.getX();
+        priorY = e.getY();
 
-        for (ArrayList<Sprite> list: spritesByLayer) {
+        for (ArrayList<PictureTile> list: spritesByLayer) {
             for (Sprite sprite: list) {
                 if (sprite instanceof GloballyScalable) {
                     GloballyScalable globScale = (GloballyScalable) sprite;
-                    globScale.scaleUp();
+                    globScale.scaleUp(e);
                 }
             }
         }
@@ -178,20 +170,21 @@ public class DraggableBackground extends Tile implements GloballyScalable {
     }
 
     @Override
-    public void scaleDown() {
+    public void scaleDown(MouseEvent e) {
 
         scaleFactor = scaleFactor.subtract(scaleStep).setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
         if (scaleFactor.compareTo(new BigDecimal(0.1f)) <= 0)
             scaleFactor = new BigDecimal(0.1f);
 
-        System.out.println("DRAG BKRND scaleFactor: " + scaleFactor.floatValue());
+        priorX = e.getX();
+        priorY = e.getY();
 
-        for (ArrayList<Sprite> list: spritesByLayer) {
+        for (ArrayList<PictureTile> list: spritesByLayer) {
             for (Sprite sprite: list) {
                 if (sprite instanceof GloballyScalable) {
                     GloballyScalable globScale = (GloballyScalable) sprite;
-                    globScale.scaleDown();
+                    globScale.scaleDown(e);
                 }
             }
         }
