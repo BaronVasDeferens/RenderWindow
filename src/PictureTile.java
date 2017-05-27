@@ -34,33 +34,49 @@ public class PictureTile extends Sprite implements Draggable, GloballyScalable {
         return (int)(xAtScaleOne * scaleFactor.floatValue());
     }
 
+    public int getUnscaledX() {
+        return xAtScaleOne;
+    }
+
     public int getY() {
         return (int)(yAtScaleOne * scaleFactor.floatValue());
     }
 
+    public int getUnscaledY() {
+        return yAtScaleOne;
+    }
+
     @Override
     public void setX(int x) {
-        //this.x = x;
         xAtScaleOne += (int)((BigDecimal.ONE.subtract(scaleFactor).floatValue() * xAtScaleOne));
         updatePolygon();
     }
 
     @Override
     public void setY(int y) {
-        //this.y = y;
         yAtScaleOne += (int)((BigDecimal.ONE.subtract(scaleFactor).floatValue() * yAtScaleOne));
         updatePolygon();
     }
 
     public void applyDeltaX(int deltaX) {
         //x += deltaX;
-        xAtScaleOne += (int)(deltaX * scaleFactor.floatValue());
+        xAtScaleOne += deltaX;
         updatePolygon();
     }
 
     public void applyDeltaY(int deltaY) {
         //y += deltaY;
-        yAtScaleOne += (int)(deltaY * scaleFactor.floatValue());
+        yAtScaleOne += deltaY;
+        updatePolygon();
+    }
+
+    public void applyX(int x) {
+        xAtScaleOne += (int)(x / scaleFactor.floatValue());
+        updatePolygon();
+    }
+
+    public void applyY(int y) {
+        yAtScaleOne += (int)(y / scaleFactor.floatValue());
         updatePolygon();
     }
 
@@ -90,6 +106,7 @@ public class PictureTile extends Sprite implements Draggable, GloballyScalable {
         g.drawImage(image, getX(), getY(), null);
         g.setColor(Color.RED);
         g.drawPolygon(polygon);
+        g.drawString("SCALE 1/" + Float.toString(scaleFactor.floatValue() * 10), 10,20);
     }
 
     @Override

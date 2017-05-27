@@ -103,26 +103,35 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
         if (dragTarget != null) {
 
-            int xDelta = priorX - e.getX();
-            priorX = e.getX();
-            dragTarget.applyDeltaX(-xDelta);
-
-            int yDelta = priorY - e.getY();
-            priorY = e.getY();
-            dragTarget.applyDeltaY(-yDelta);
-
-            // Drag & move background
             if (dragTarget.isBackground()) {
+
+                int xDelta = priorX - e.getX();
+                priorX = e.getX();
+                dragTarget.applyDeltaX(-xDelta);
+
+                int yDelta = priorY - e.getY();
+                priorY = e.getY();
+                dragTarget.applyDeltaY(-yDelta);
 
                 // Update all other entities, skipping layer 0
                 for (int i = 1; i < 10; i++) {
                     for (PictureTile pTile : spritesByLayer[i]) {
-                        // Center on mouse
                         pTile.applyDeltaX(-xDelta);
                         pTile.applyDeltaY(-yDelta);
                     }
                 }
             }
+
+            else {
+                int xDelta = priorX - e.getX();
+                priorX = e.getX();
+                dragTarget.applyX(-xDelta);
+
+                int yDelta = priorY - e.getY();
+                priorY = e.getY();
+                dragTarget.applyY(-yDelta);
+            }
+
         }
     }
 
