@@ -107,17 +107,17 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
                 int xDelta = priorX - e.getX();
                 priorX = e.getX();
-                dragTarget.applyDeltaX(-xDelta);
+                dragTarget.applyX(-xDelta);
 
                 int yDelta = priorY - e.getY();
                 priorY = e.getY();
-                dragTarget.applyDeltaY(-yDelta);
+                dragTarget.applyY(-yDelta);
 
                 // Update all other entities, skipping layer 0
                 for (int i = 1; i < 10; i++) {
                     for (PictureTile pTile : spritesByLayer[i]) {
-                        pTile.applyDeltaX(-xDelta);
-                        pTile.applyDeltaY(-yDelta);
+                        pTile.applyX(-xDelta);
+                        pTile.applyY(-yDelta);
                     }
                 }
             }
