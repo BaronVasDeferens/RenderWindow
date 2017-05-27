@@ -31,8 +31,6 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
     /**
      * Adds sprites to the correct layer.
-     *
-     * @param layer
      */
     public void addSprite(PictureTile pTile, int layer) {
         spritesByLayer[layer].add(pTile);
@@ -44,12 +42,9 @@ public class DraggableBackground extends Tile implements GloballyScalable {
      *
      * @param graphics
      */
-
     public void updateAndPaint(Graphics graphics) {
-
         Arrays.stream(spritesByLayer)
                 .forEach((list) -> list.forEach(sprite -> sprite.updateAndDrawGraphics(graphics)));
-
     }
 
     @Override
@@ -58,9 +53,9 @@ public class DraggableBackground extends Tile implements GloballyScalable {
     }
 
 
-
     /**
      * Finds the Sprite with the highest "layer" attribute that contains the click
+     *
      * @param me
      * @return
      */
@@ -97,6 +92,7 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
     /**
      * Updates the positions of the various Sprites
+     *
      * @param e
      */
     public void moveTarget(MouseEvent e) {
@@ -120,9 +116,7 @@ public class DraggableBackground extends Tile implements GloballyScalable {
                         pTile.applyY(-yDelta);
                     }
                 }
-            }
-
-            else {
+            } else {
                 int xDelta = priorX - e.getX();
                 priorX = e.getX();
                 dragTarget.applyX(-xDelta);
@@ -137,6 +131,7 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
     /**
      * Called when the user releases the mouse
+     *
      * @param e
      */
     public void releaseTarget(MouseEvent e) {
@@ -145,8 +140,8 @@ public class DraggableBackground extends Tile implements GloballyScalable {
         priorY = e.getY();
         dragTarget = null;
 
-        for (ArrayList<PictureTile> list: spritesByLayer) {
-            for (Sprite sprite: list) {
+        for (ArrayList<PictureTile> list : spritesByLayer) {
+            for (Sprite sprite : list) {
                 if (sprite instanceof PictureTile) {
                     PictureTile picTile = (PictureTile) sprite;
                     picTile.updatePolygon();
@@ -167,8 +162,8 @@ public class DraggableBackground extends Tile implements GloballyScalable {
         priorX = e.getX();
         priorY = e.getY();
 
-        for (ArrayList<PictureTile> list: spritesByLayer) {
-            for (Sprite sprite: list) {
+        for (ArrayList<PictureTile> list : spritesByLayer) {
+            for (Sprite sprite : list) {
                 if (sprite instanceof GloballyScalable) {
                     GloballyScalable globScale = (GloballyScalable) sprite;
                     globScale.scaleUp(e);
@@ -189,8 +184,8 @@ public class DraggableBackground extends Tile implements GloballyScalable {
         priorX = e.getX();
         priorY = e.getY();
 
-        for (ArrayList<PictureTile> list: spritesByLayer) {
-            for (Sprite sprite: list) {
+        for (ArrayList<PictureTile> list : spritesByLayer) {
+            for (Sprite sprite : list) {
                 if (sprite instanceof GloballyScalable) {
                     GloballyScalable globScale = (GloballyScalable) sprite;
                     globScale.scaleDown(e);
