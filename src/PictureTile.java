@@ -34,17 +34,11 @@ public class PictureTile extends Sprite implements Draggable, GloballyScalable {
         return (int)(xAtScaleOne * scaleFactor.floatValue());
     }
 
-    public int getUnscaledX() {
-        return xAtScaleOne;
-    }
 
     public int getY() {
         return (int)(yAtScaleOne * scaleFactor.floatValue());
     }
 
-    public int getUnscaledY() {
-        return yAtScaleOne;
-    }
 
     @Override
     public void setX(int x) {
@@ -58,18 +52,6 @@ public class PictureTile extends Sprite implements Draggable, GloballyScalable {
         updatePolygon();
     }
 
-    public void applyDeltaX(int deltaX) {
-        //x += deltaX;
-        xAtScaleOne += deltaX;
-        updatePolygon();
-    }
-
-    public void applyDeltaY(int deltaY) {
-        //y += deltaY;
-        yAtScaleOne += deltaY;
-        updatePolygon();
-    }
-
     public void applyX(int x) {
         xAtScaleOne += (int)(x / scaleFactor.floatValue());
         updatePolygon();
@@ -79,7 +61,6 @@ public class PictureTile extends Sprite implements Draggable, GloballyScalable {
         yAtScaleOne += (int)(y / scaleFactor.floatValue());
         updatePolygon();
     }
-
 
     public void updatePolygon() {
         polygon = new Polygon();
@@ -97,9 +78,6 @@ public class PictureTile extends Sprite implements Draggable, GloballyScalable {
     public Point getCenter() {
         return new Point((getX() + image.getWidth()) / 2, ((getY() + image.getHeight())) / 2);
     }
-
-
-
 
     @Override
     public synchronized void updateAndDrawGraphics(Graphics g) {
