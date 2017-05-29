@@ -26,10 +26,6 @@ public class ScatterTile extends Tile {
         return (x < leftBound) || (x > rightBound) || (y < upperBound) || (y > lowerBound);
     }
 
-    @Override
-    public boolean containsPoint(Point p) {
-        return false;
-    }
 
     @Override
     public synchronized void updateAndDrawGraphics(Graphics g) {
@@ -43,7 +39,7 @@ public class ScatterTile extends Tile {
             resetBoogieFactors();
         }
 
-        g.setColor(color);
+        g.setColor(Color.RED);
         g.fillRect(x, y, size, size);
     }
 
@@ -87,6 +83,6 @@ public class ScatterTile extends Tile {
 //            disposeOnNextUpdate = true;
 //        }
 
-        color = new Color(255, 0, 0);
+        //color = new Color(255, 0, 0);
     }
 }
