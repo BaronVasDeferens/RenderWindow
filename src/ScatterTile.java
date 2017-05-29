@@ -1,12 +1,11 @@
 import java.awt.*;
 
-/**
- * Created by skot on 3/31/17.
- */
+
 public class ScatterTile extends Tile {
 
     private int boogieFactorX = 0, boogieFactorY = 0;
     private int lowerBound, upperBound, leftBound, rightBound;
+    private Color color;
 
     public ScatterTile(int x, int y, int size, Color backgroundColor) {
 
@@ -26,8 +25,9 @@ public class ScatterTile extends Tile {
         return (x < leftBound) || (x > rightBound) || (y < upperBound) || (y > lowerBound);
     }
 
+
     @Override
-    void updateAndDrawGraphics(Graphics g) {
+    public synchronized void updateAndDrawGraphics(Graphics g) {
 
         x += boogieFactorX;
         y += boogieFactorY;
