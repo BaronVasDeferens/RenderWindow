@@ -59,12 +59,12 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-        renderFrame.assessClick(e);
+        //renderFrame.assessClick(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        renderFrame.releaseTarget(e);
+        //renderFrame.releaseTarget(e);
     }
 
     @Override
@@ -79,7 +79,8 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        renderFrame.moveTarget(e);
+
+        //renderFrame.moveTarget(e);
     }
 
     @Override
@@ -89,11 +90,11 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-         wheelClicks++;
-
-        if (wheelClicks >= 1) {
-            renderFrame.zoomInOrOut(e);
-            wheelClicks = 0;
-        }
+//         wheelClicks++;
+//
+//        if (wheelClicks >= 1) {
+//            renderFrame.zoomInOrOut(e);
+//            wheelClicks = 0;
+//        }
     }
 }
