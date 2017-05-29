@@ -38,7 +38,7 @@ public abstract class Sprite {
         try (InputStream fin = getClass().getResourceAsStream("images/" + imageName)) {
             loaded = ImageIO.read(fin);
             fin.close();
-            System.out.println("loaded " + imageName + ": " + loaded.getWidth() + "x" + loaded.getHeight());
+            // System.out.println("loaded " + imageName + ": " + loaded.getWidth() + "x" + loaded.getHeight());
             return loaded;
         } catch (Exception e) {
             System.out.println(e.toString());

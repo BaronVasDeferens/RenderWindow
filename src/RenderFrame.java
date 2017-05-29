@@ -92,12 +92,12 @@ public class RenderFrame implements WindowListener {
         clickableBackgroundMap.addSprite(backgroundTile, 0);
 
         // Make the six robot tiles
-        clickableBackgroundMap.addSprite(new PictureTile("../images/auda_sm.png", 50,50), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/iris_sm.png", 150,50), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/poet_sm.png", 250,50), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/sensa_sm.png", 350,50), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/waldo_sm.png", 450,50), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/whiz_sm.png", 550,50), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/auda_sm.png", 656,212), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/iris_sm.png", 1024,2616), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/poet_sm.png", 1316,2626), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/sensa_sm.png", 1150,2626), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/waldo_sm.png", 2372,2978), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/whiz_sm.png", 1888,2906), 1);
 
         sprites.add(clickableBackgroundMap);
 

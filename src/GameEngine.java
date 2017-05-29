@@ -5,6 +5,8 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     RenderFrame renderFrame;
 
+    private static int wheelClicks = 0;
+
     public static void main (String ... args) {
         GameEngine gameEngine = new GameEngine();
     }
@@ -18,7 +20,6 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
         renderFrame.registerMouseMotionListener(this);
         renderFrame.registerMouseWheelListener(this);
 
-        //renderFrame.goFullscreen();
         renderFrame.start();
     }
 
@@ -42,7 +43,6 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
             case KeyEvent.VK_A:
                 break;
             case KeyEvent.VK_SPACE:
-                renderFrame.pauseOrContinue();
             default:
                 break;
         }
@@ -89,6 +89,11 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        renderFrame.zoomInOrOut(e);
+         wheelClicks++;
+
+        if (wheelClicks >= 1) {
+            renderFrame.zoomInOrOut(e);
+            wheelClicks = 0;
+        }
     }
 }

@@ -17,6 +17,9 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
     BigDecimal scaleFactor;
 
+    boolean displayCoords = false;
+
+
     DraggableBackground(int width, int height) {
         super(width, height, 0, Color.WHITE);
 
@@ -49,7 +52,16 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
     @Override
     public void updateAndDrawGraphics(Graphics g) {
+
         updateAndPaint(g);
+
+        if (displayCoords) {
+            g.setColor(Color.RED);
+            PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+            g.drawString("x: " + pointerInfo.getLocation().getX() +
+                    " y: " + pointerInfo.getLocation().getY(), 10, 20);
+        }
+
     }
 
 
@@ -83,9 +95,6 @@ public class DraggableBackground extends Tile implements GloballyScalable {
 
         priorX = me.getX();
         priorY = me.getY();
-
-        // debug: who got clicked
-        System.out.println(dragTarget.toString());
 
         return dragTarget;
     }
