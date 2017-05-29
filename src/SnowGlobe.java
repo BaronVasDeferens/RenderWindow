@@ -6,11 +6,11 @@ import java.math.BigDecimal;
  */
 public class SnowGlobe extends Effect {
 
-    private final int width;
-    private final int length;
-    private final int maxFlakes;
-    private final int minSize;
-    private final int maxSize;
+    protected final int width;
+    protected final int length;
+    protected final int maxFlakes;
+    protected final int minSize;
+    protected final int maxSize;
 
     SnowGlobe(int width, int length, int maxFlakes, int minSize, int maxSize) {
         super(width, length);
@@ -22,12 +22,17 @@ public class SnowGlobe extends Effect {
 
         for (int i = 0; i < Math.sqrt(maxFlakes); i++) {
             for (int j = 0; j < Math.sqrt(maxFlakes); j++) {
-                ScatterTile st = new ScatterTile(width/2, height/2, rando.nextInt(maxSize) + minSize, new Color(rando.nextInt(225), 0, 0));
+                ScatterTile st = new ScatterTile(width/2,
+                        height/2,
+                        rando.nextInt(maxSize) + minSize,
+                        new Color(0,255,0));
                 st.setBounds(0, width, 0, height);
                 sprites.add(st);
             }
         }
     }
+
+
 
 
     @Override
@@ -41,6 +46,7 @@ public class SnowGlobe extends Effect {
         }
 
         sprites.removeAll(deadSprites);
+        deadSprites.clear();
     }
 
 
