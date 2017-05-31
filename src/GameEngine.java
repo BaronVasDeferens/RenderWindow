@@ -8,7 +8,6 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
     private static int wheelClicks = 0;
 
     public static void main (String ... args) {
-
         GameEngine gameEngine = new GameEngine();
     }
 
@@ -80,7 +79,6 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
         //renderFrame.moveTarget(e);
     }
 

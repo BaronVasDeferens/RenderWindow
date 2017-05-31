@@ -17,14 +17,7 @@ public class RenderFrame implements WindowListener {
 
     private ArrayList<Sprite> sprites;
 
-     DraggableBackground clickableBackgroundMap;
-
-    final float SCALE_FACTOR = 0.10f;
-
-
-
-
-
+    DraggableBackground clickableBackgroundMap;
 
     private boolean isPaused = false;
 
@@ -180,13 +173,6 @@ public class RenderFrame implements WindowListener {
     }
 
 
-    public void quit() {
-        renderer.quit();
-        canvas = null;
-        jFrame.dispose();
-    }
-
-
     @Override
     public void windowIconified(WindowEvent we) {
     }
@@ -217,6 +203,10 @@ public class RenderFrame implements WindowListener {
     public void windowDeactivated(WindowEvent e) {
     }
 
-
+    public void quit() {
+        renderer.quit();
+        canvas = null;
+        jFrame.dispose();
+    }
 
 }
