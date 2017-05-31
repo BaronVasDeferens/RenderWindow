@@ -17,7 +17,7 @@ public class RenderFrame implements WindowListener {
 
     private ArrayList<Sprite> sprites;
 
-    // DraggableBackground clickableBackgroundMap;
+     DraggableBackground clickableBackgroundMap;
 
     final float SCALE_FACTOR = 0.10f;
 
@@ -83,22 +83,22 @@ public class RenderFrame implements WindowListener {
 
         // sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
 
-//        clickableBackgroundMap = new DraggableBackground(PANEL_WIDTH, PANEL_HEIGHT);
-//
-//        // Create the lowest layer (background)
-//        PictureTile backgroundTile = new PictureTile("../images/suspended_map.png");
-//        backgroundTile.setIsBackground(true);
-//        clickableBackgroundMap.addSprite(backgroundTile, 0);
-//
-//        // Make the six robot tiles
-//        clickableBackgroundMap.addSprite(new PictureTile("../images/auda_sm.png", 656,212), 1);
-//        clickableBackgroundMap.addSprite(new PictureTile("../images/iris_sm.png", 1024,2616), 1);
-//        clickableBackgroundMap.addSprite(new PictureTile("../images/poet_sm.png", 1316,2626), 1);
-//        clickableBackgroundMap.addSprite(new PictureTile("../images/sensa_sm.png", 1150,2626), 1);
-//        clickableBackgroundMap.addSprite(new PictureTile("../images/waldo_sm.png", 2372,2978), 1);
-//        clickableBackgroundMap.addSprite(new PictureTile("../images/whiz_sm.png", 1888,2906), 1);
+        clickableBackgroundMap = new DraggableBackground(PANEL_WIDTH, PANEL_HEIGHT);
 
-//        sprites.add(clickableBackgroundMap);
+        // Create the lowest layer (background)
+        PictureTile backgroundTile = new PictureTile("../images/suspended_map.png");
+        backgroundTile.setIsBackground(true);
+        clickableBackgroundMap.addSprite(backgroundTile, 0);
+
+        // Make the six robot tiles
+        clickableBackgroundMap.addSprite(new PictureTile("../images/auda_sm.png", 656,212), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/iris_sm.png", 1024,2616), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/poet_sm.png", 1316,2626), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/sensa_sm.png", 1150,2626), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/waldo_sm.png", 2372,2978), 1);
+        clickableBackgroundMap.addSprite(new PictureTile("../images/whiz_sm.png", 1888,2906), 1);
+
+        sprites.add(clickableBackgroundMap);
 
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
@@ -148,7 +148,7 @@ public class RenderFrame implements WindowListener {
      * @param e
      */
     public void assessClick(MouseEvent e) {
-//         clickableBackgroundMap.assessClick(e);
+         clickableBackgroundMap.assessClick(e);
     }
 
     /**
@@ -157,14 +157,14 @@ public class RenderFrame implements WindowListener {
      * @param e
      */
     public void moveTarget(MouseEvent e) {
-//        clickableBackgroundMap.moveTarget(e);
+        clickableBackgroundMap.moveTarget(e);
     }
 
     /**
      * When the user releases the button, release the "dragTarget"
      */
     public void releaseTarget(MouseEvent e) {
-//        clickableBackgroundMap.releaseTarget(e);
+        clickableBackgroundMap.releaseTarget(e);
     }
 
     /**
@@ -172,10 +172,10 @@ public class RenderFrame implements WindowListener {
      */
     public void zoomInOrOut(MouseWheelEvent e) {
 
-//        if (e.getWheelRotation() > 0)
-//            clickableBackgroundMap.scaleUp(e);
-//        else
-//            clickableBackgroundMap.scaleDown(e);
+        if (e.getWheelRotation() > 0)
+            clickableBackgroundMap.scaleUp(e);
+        else
+            clickableBackgroundMap.scaleDown(e);
 
     }
 
