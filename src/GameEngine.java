@@ -1,21 +1,26 @@
-import java.awt.*;
 import java.awt.event.*;
 
 
-public class GameEngine implements KeyListener, MouseListener, MouseMotionListener {
+public class GameEngine implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
     RenderFrame renderFrame;
 
+    private static int wheelClicks = 0;
+
     public static void main (String ... args) {
+
         GameEngine gameEngine = new GameEngine();
     }
 
     public GameEngine() {
-        renderFrame = new RenderFrame();
+        renderFrame = new RenderFrame(700, 700);
+
+        // Register listeners
         renderFrame.registerKeyListener(this);
         renderFrame.registerMouseListener(this);
-        //renderFrame.registerMouseMotionListener(this);
-        renderFrame.goFullscreen();
+        renderFrame.registerMouseMotionListener(this);
+        renderFrame.registerMouseWheelListener(this);
+
         renderFrame.start();
     }
 
@@ -39,7 +44,6 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
             case KeyEvent.VK_A:
                 break;
             case KeyEvent.VK_SPACE:
-                renderFrame.pauseOrContinue();
             default:
                 break;
         }
@@ -51,17 +55,17 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        renderFrame.pauseOrContinue();
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        //renderFrame.assessClick(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        //renderFrame.releaseTarget(e);
     }
 
     @Override
@@ -77,11 +81,21 @@ public class GameEngine implements KeyListener, MouseListener, MouseMotionListen
     @Override
     public void mouseDragged(MouseEvent e) {
 
+        //renderFrame.moveTarget(e);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        Point p = e.getPoint();
-        System.out.println(p.getX() + "," + p.getY());
+
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+//         wheelClicks++;
+//
+//        if (wheelClicks >= 1) {
+//            renderFrame.zoomInOrOut(e);
+//            wheelClicks = 0;
+//        }
     }
 }

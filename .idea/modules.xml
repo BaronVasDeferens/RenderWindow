@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RenderWindow.iml" filepath="$PROJECT_DIR$/RenderWindow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RenderWindow.iml" filepath="$PROJECT_DIR$/.idea/RenderWindow.iml" />
     </modules>
   </component>
 </project>
