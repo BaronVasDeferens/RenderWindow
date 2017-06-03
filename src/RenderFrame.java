@@ -7,20 +7,17 @@ import java.util.ArrayList;
 
 public class RenderFrame implements WindowListener {
 
-    Canvas canvas;
-    JFrame jFrame;
-    BufferStrategy buffer;
-    RenderThread renderer;
+    private Canvas canvas;
+    private JFrame jFrame;
+    private BufferStrategy buffer;
+    private RenderThread renderer;
 
-    private int PANEL_WIDTH = 600;
-    private int PANEL_HEIGHT = 600;
+    protected int PANEL_WIDTH = 600;
+    protected int PANEL_HEIGHT = 600;
 
-    private ArrayList<Sprite> sprites;
-
-    DraggableBackground clickableBackgroundMap;
+    protected ArrayList<Sprite> sprites;
 
     private boolean isPaused = false;
-
 
     public RenderFrame(int width, int height) {
 
@@ -32,6 +29,20 @@ public class RenderFrame implements WindowListener {
         jFrame = new JFrame();
         canvas = new Canvas();
         sprites = new ArrayList<>();
+
+        jFrame.requestFocus();
+        jFrame.setSize(PANEL_WIDTH, PANEL_HEIGHT);
+        jFrame.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+
+        canvas.setBackground(Color.BLACK);
+        canvas.setSize(PANEL_WIDTH, PANEL_HEIGHT);
+        canvas.setIgnoreRepaint(true);
+
+        jFrame.add(canvas);
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.addWindowListener(this);
+        jFrame.pack();
+        jFrame.setVisible(true);
 
 //        if (System.getProperty("os.name").contains("Windows")) {
 //            jFrame.setUndecorated(true);
@@ -58,49 +69,13 @@ public class RenderFrame implements WindowListener {
         canvas.addMouseWheelListener(wheelListener);
     }
 
-    private void init() {
-
-        jFrame.requestFocus();
-        jFrame.setSize(PANEL_WIDTH, PANEL_HEIGHT);
-        jFrame.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-
-        canvas.setBackground(Color.BLACK);
-        canvas.setSize(PANEL_WIDTH, PANEL_HEIGHT);
-        canvas.setIgnoreRepaint(true);
-
-        jFrame.add(canvas);
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.addWindowListener(this);
-        jFrame.pack();
-        jFrame.setVisible(true);
-
-        // sprites.add(new SnowGlobe(PANEL_WIDTH, PANEL_HEIGHT, 900, 2, 40));
-
-        clickableBackgroundMap = new DraggableBackground(PANEL_WIDTH, PANEL_HEIGHT);
-
-        // Create the lowest layer (background)
-        PictureTile backgroundTile = new PictureTile("../images/suspended_map.png");
-        backgroundTile.setIsBackground(true);
-        clickableBackgroundMap.addSprite(backgroundTile, 0);
-
-        // Make the six robot tiles
-        clickableBackgroundMap.addSprite(new PictureTile("../images/auda_sm.png", 656,212), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/iris_sm.png", 1024,2616), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/poet_sm.png", 1316,2626), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/sensa_sm.png", 1150,2626), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/waldo_sm.png", 2372,2978), 1);
-        clickableBackgroundMap.addSprite(new PictureTile("../images/whiz_sm.png", 1888,2906), 1);
-
-        sprites.add(clickableBackgroundMap);
+    public void start() {
 
         canvas.createBufferStrategy(2);
         buffer = canvas.getBufferStrategy();
         renderer = new RenderThread(PANEL_WIDTH, PANEL_HEIGHT, sprites, canvas, buffer);
         renderer.setPriority(Thread.MAX_PRIORITY);
-    }
 
-    public void start() {
-        init();
         renderer.start();
     }
 
@@ -115,12 +90,10 @@ public class RenderFrame implements WindowListener {
                 graphicsDev.setFullScreenWindow(jFrame);
                 PANEL_WIDTH = graphicsDev.getDisplayMode().getWidth();
                 PANEL_HEIGHT = graphicsDev.getDisplayMode().getHeight();
-                init();
                 return;
             }
         }
     }
-
 
     public void pauseOrContinue() {
 
@@ -133,45 +106,6 @@ public class RenderFrame implements WindowListener {
             renderer.pauseRender();
         }
     }
-
-
-    /**
-     * Determine whether the user has clicked on a Sprite;
-     * If yes, then set that Sprite as the "dragTarget"
-     * @param e
-     */
-    public void assessClick(MouseEvent e) {
-         clickableBackgroundMap.assessClick(e);
-    }
-
-    /**
-     * Moves the "dragTarget" around with the mouse. If the target of the click is a Tile, move the tile;
-     * If the target is a background PictureTile, scroll around the image
-     * @param e
-     */
-    public void moveTarget(MouseEvent e) {
-        clickableBackgroundMap.moveTarget(e);
-    }
-
-    /**
-     * When the user releases the button, release the "dragTarget"
-     */
-    public void releaseTarget(MouseEvent e) {
-        clickableBackgroundMap.releaseTarget(e);
-    }
-
-    /**
-     * Zooms the entities on screen in or out, depending on whether zoomFactor is positive (in) or negative (out)
-     */
-    public void zoomInOrOut(MouseWheelEvent e) {
-
-        if (e.getWheelRotation() > 0)
-            clickableBackgroundMap.scaleUp(e);
-        else
-            clickableBackgroundMap.scaleDown(e);
-
-    }
-
 
     @Override
     public void windowIconified(WindowEvent we) {
