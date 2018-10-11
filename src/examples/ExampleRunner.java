@@ -49,6 +49,9 @@ public class ExampleRunner implements KeyListener {
 //            sprites.add(new SnowGlobe(1366, 768, 250, 25, 50));
 
             File f = new File("bob.png");
+            if (!f.exists()) {
+                throw new RuntimeException("file not found");
+            }
          try {
              final BufferedImage image = ImageIO.read(f);
 
@@ -56,9 +59,7 @@ public class ExampleRunner implements KeyListener {
                  sprites.add(new Tumbler(image, 1366, 768));
              }
 
-         } catch (FileNotFoundException e) {
-             e.printStackTrace();
-         } catch (IOException e) {
+         } catch (final Exception e) {
              e.printStackTrace();
          }
 
