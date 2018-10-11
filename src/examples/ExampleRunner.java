@@ -2,7 +2,7 @@ import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
 
 public class ExampleRunner implements KeyListener {
 
@@ -49,19 +49,17 @@ public class ExampleRunner implements KeyListener {
 //            sprites.add(new SnowGlobe(1366, 768, 250, 25, 50));
 
             File f = new File("bob.png");
-            if (!f.exists()) {
-                throw new RuntimeException("file not found");
+
+            try {
+                final BufferedImage image = ImageIO.read(f);
+
+                for (int spriteCount = 0; spriteCount < 50; spriteCount++) {
+                    sprites.add(new Tumbler(image, 1366, 768));
+                }
+
+            } catch (final Exception e) {
+                e.printStackTrace();
             }
-         try {
-             final BufferedImage image = ImageIO.read(f);
-
-             for (int spriteCount = 0; spriteCount < 50; spriteCount++) {
-                 sprites.add(new Tumbler(image, 1366, 768));
-             }
-
-         } catch (final Exception e) {
-             e.printStackTrace();
-         }
 
 
         }
