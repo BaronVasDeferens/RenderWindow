@@ -1,3 +1,5 @@
+import javafx.scene.input.KeyCode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -67,6 +69,12 @@ public class RenderFrame implements WindowListener {
     public void registerMouseWheelListener(MouseWheelListener wheelListener) {
         jFrame.addMouseWheelListener(wheelListener);
         canvas.addMouseWheelListener(wheelListener);
+    }
+
+    public void setSleepDuration(int sleepDuration) {
+        if (renderer != null) {
+            renderer.setSleepDuration(sleepDuration);
+        }
     }
 
     public void start() {
@@ -142,5 +150,4 @@ public class RenderFrame implements WindowListener {
         canvas = null;
         jFrame.dispose();
     }
-
 }

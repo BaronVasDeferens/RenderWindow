@@ -87,6 +87,10 @@ public class RenderThread extends Thread {
 
     }
 
+    public synchronized void setSleepDuration(int sleepDuration) {
+        this.SLEEP_DURATION = sleepDuration;
+    }
+
     public synchronized void pauseRender() {
         isPaused = true;
     }
@@ -96,7 +100,7 @@ public class RenderThread extends Thread {
         notify();
     }
 
-    public void quit() {
+    public synchronized void quit() {
         continueRendering = false;
     }
 
