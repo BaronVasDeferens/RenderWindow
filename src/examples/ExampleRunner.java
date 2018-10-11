@@ -52,7 +52,10 @@ public class ExampleRunner implements KeyListener {
          try {
              final BufferedImage image = ImageIO.read(f);
 
-             sprites.add(new Tumbler(image, 1366, 768));
+             for (int spriteCount = 0; spriteCount < 50; spriteCount++) {
+                 sprites.add(new Tumbler(image, 1366, 768));
+             }
+
          } catch (FileNotFoundException e) {
              e.printStackTrace();
          } catch (IOException e) {
