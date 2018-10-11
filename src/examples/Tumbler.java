@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.math.BigDecimal;
 import java.util.Random;
 
 public class Tumbler extends Sprite {
@@ -18,9 +17,9 @@ public class Tumbler extends Sprite {
     float scale = 1.0f;
     Random rando;
 
-    public Tumbler (String filename, final int MAX_X, final int MAX_Y) {
+    public Tumbler (final BufferedImage image, final int MAX_X, final int MAX_Y) {
 
-        super(filename);
+        super(image);
         this.MAX_X = MAX_X;
         this.MAX_Y = MAX_Y;
 

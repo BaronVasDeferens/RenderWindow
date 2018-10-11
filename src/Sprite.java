@@ -17,6 +17,10 @@ public abstract class Sprite {
 
     public Sprite() {}
 
+    public Sprite(final BufferedImage image) {
+        this.image = image;
+    }
+
     public Sprite (String filename) {
         image = loadImage(filename);
     }
@@ -35,7 +39,7 @@ public abstract class Sprite {
     public BufferedImage loadImage(String imageName) {
 
         BufferedImage loaded = null;
-        try (InputStream fin = getClass().getResourceAsStream("images/" + imageName)) {
+        try (InputStream fin = getClass().getResourceAsStream(imageName)) {
             loaded = ImageIO.read(fin);
             fin.close();
             return loaded;
@@ -43,6 +47,10 @@ public abstract class Sprite {
             System.out.println(e.toString());
             throw new RuntimeException(e);
         }
+    }
+
+    public void setImage(final BufferedImage image) {
+
     }
 
 }

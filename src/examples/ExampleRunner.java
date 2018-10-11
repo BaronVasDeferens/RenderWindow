@@ -1,5 +1,8 @@
+import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 public class ExampleRunner implements KeyListener {
 
@@ -43,7 +46,20 @@ public class ExampleRunner implements KeyListener {
 
         public Effector(int width, int height) {
             super(width, height);
-            sprites.add(new SnowGlobe(1366, 768, 250, 25, 50));
+//            sprites.add(new SnowGlobe(1366, 768, 250, 25, 50));
+
+            File f = new File("bob.png");
+         try {
+             final BufferedImage image = ImageIO.read(f);
+
+             sprites.add(new Tumbler(image, 1366, 768));
+         } catch (FileNotFoundException e) {
+             e.printStackTrace();
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+
+
         }
     }
 
